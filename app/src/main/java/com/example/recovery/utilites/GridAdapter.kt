@@ -32,9 +32,17 @@ class GridAdapter (private val movies:ArrayList<Movie>,private val clickHandler:
         }else
             Glide.with(holder.movieImg).load(IMAGE_BASE_URL+movie.poster_path).into(holder.movieImg)
 
+        var htmlText=""
+        if(movie.release_date.isNullOrEmpty()){
+            htmlText = "<font color='#FFFFFF'>${movie.original_title})</font>"
+            holder.movieName.text=Html.fromHtml(htmlText)
+        }
 
-        val htmlText = "<font color='#FFFFFF'>${movie.original_title}</font>  <font color='#7986CB'>(${movie.release_date.split("-").get(0)})</font>"
-        holder.movieName.text= Html.fromHtml(htmlText)
+        else{
+             htmlText = "<font color='#FFFFFF'>${movie.original_title}</font>  <font color='#7986CB'>(${movie.release_date.split("-").get(0)})</font>"
+            holder.movieName.text= Html.fromHtml(htmlText)
+        }
+
 
         holder.movie.setOnClickListener(){
             clickHandler.onMovieClick(movie)

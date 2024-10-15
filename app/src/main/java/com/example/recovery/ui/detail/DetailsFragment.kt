@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +27,7 @@ import com.example.recovery.data.remote.ApiClient
 import com.example.recovery.ui.detail.repo.DetailRepo
 import com.example.recovery.ui.detail.viewmodel.DetailViewModel
 import com.example.recovery.ui.detail.viewmodel.DetailViewModelFactory
+import com.example.recovery.ui.home.fragment.HomeFragmentDirections
 import com.example.recovery.utilites.CastAdapter
 import com.example.recovery.utilites.Connection
 import com.example.recovery.utilites.SimilarAdapter
@@ -150,7 +152,6 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
 
                     }
                 }
-                (activity as? AppCompatActivity)?.supportActionBar?.title = currMovie.original_title
 
 
             }
@@ -192,12 +193,19 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
                 }
             }
 
-            (activity as? AppCompatActivity)?.supportActionBar?.title = currMovie.original_title
 
 
         }
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::currMovie.isInitialized){
+            (activity as? AppCompatActivity)?.supportActionBar?.title = currMovie.original_title
+
+        }
     }
 
     private fun insertMovie(currMovie: FavMovie) {
@@ -249,8 +257,12 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
                 favourite=true
             }
         }
+        (activity as? AppCompatActivity)?.supportActionBar?.title = currMovie.original_title
+
 
     }
+
+
 
     private fun getMovieCast(id:String) {
         detailViewModel.getMovieCast(id)
@@ -307,8 +319,14 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
     }
 
 
-    override fun onSimilarMovieClick(id: Int) {
-       detailViewModel.getDetailMovie(id.toString())
+    override fun onSimilarMovieClick(movie: Movie) {
+
+        val action = DetailsFragmentDirections.actionDetailsFragmentSelf(
+            FavMovie(movie.backdrop_path,movie.poster_path,movie.original_title,movie.original_language,movie.runtime
+                ,movie.vote_average,movie.overview,movie.release_date,movie.id)
+        )
+        findNavController().navigate(action)
+
     }
 
 

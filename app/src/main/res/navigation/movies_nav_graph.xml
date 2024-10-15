@@ -48,6 +48,9 @@
         <argument
             android:name="favmovie"
             app:argType="com.example.recovery.data.model.entity.FavMovie" />
+        <action
+            android:id="@+id/action_detailsFragment_self"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

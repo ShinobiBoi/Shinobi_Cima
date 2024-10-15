@@ -30,12 +30,12 @@ class SimilarAdapter(private val movies:List<Movie>,private val similarClickHand
 
         if (movie.poster_path.isNullOrEmpty()){
             Glide.with(holder.movieImg).load(R.drawable.noimage).into(holder.movieImg)
-        }else
+        }else{
             Glide.with(holder.movieImg).load(IMAGE_BASE_URL+movie.poster_path).into(holder.movieImg)
 
-
-        holder.movie.setOnClickListener(){
-            similarClickHandler.onSimilarMovieClick(movie.id)
+            holder.movie.setOnClickListener(){
+                similarClickHandler.onSimilarMovieClick(movie)
+            }
         }
 
     }
