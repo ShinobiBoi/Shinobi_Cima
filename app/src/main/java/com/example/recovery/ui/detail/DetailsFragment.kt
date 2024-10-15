@@ -44,6 +44,9 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
    private lateinit var movieDetail: TextView
    private lateinit var movieDuration:TextView
    private lateinit var movieRelease:TextView
+   private lateinit var castText :TextView
+    private lateinit var similarText :TextView
+
 
    private lateinit var favBtn : ImageButton
 
@@ -99,6 +102,11 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
         // if not the movie is saved with its details in the room database
         if (Connection.isNetworkAvailable(requireContext())){
 
+
+
+            castText.visibility=View.VISIBLE
+            similarText.visibility=View.VISIBLE
+
             detailViewModel.getDetailMovie(args.favmovie.id.toString())
 
             detailViewModel.detailMovie.observe(viewLifecycleOwner){
@@ -149,6 +157,13 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
 
 
         }else{
+
+
+
+            castText.visibility=View.GONE
+            similarText.visibility=View.GONE
+
+
             currMovie=args.favmovie
 
 
@@ -276,6 +291,8 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
         similarMovies=view.findViewById(R.id.similar_movies)
         movieCast=view.findViewById(R.id.movie_cast)
         moviePoster=view.findViewById(R.id.detail_movie_poster)
+        castText=view.findViewById(R.id.text_cast)
+        similarText=view.findViewById(R.id.text_similar)
 
         favBtn=view.findViewById(R.id.favbtn)
 
