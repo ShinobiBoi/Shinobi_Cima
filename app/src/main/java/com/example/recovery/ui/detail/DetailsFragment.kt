@@ -1,8 +1,8 @@
 package com.example.recovery.ui.detail
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +27,6 @@ import com.example.recovery.data.remote.ApiClient
 import com.example.recovery.ui.detail.repo.DetailRepo
 import com.example.recovery.ui.detail.viewmodel.DetailViewModel
 import com.example.recovery.ui.detail.viewmodel.DetailViewModelFactory
-import com.example.recovery.ui.home.fragment.HomeFragmentDirections
 import com.example.recovery.utilites.CastAdapter
 import com.example.recovery.utilites.Connection
 import com.example.recovery.utilites.SimilarAdapter
@@ -141,7 +140,7 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
                 bindViews(currMovie)
 
 
-                favBtn.setOnClickListener(){
+                favBtn.setOnClickListener{
                     if (favourite){
 
                         deleteMovie(currMovie)
@@ -181,7 +180,7 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
             // bind the data into the vies
             bindViews(currMovie)
 
-            favBtn.setOnClickListener(){
+            favBtn.setOnClickListener{
                 if (favourite){
 
                     deleteMovie(currMovie)
@@ -230,6 +229,7 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
 
     }
 
+    @SuppressLint("SetTextI18n", "DefaultLocale")
     private fun bindViews(favMovie: FavMovie) {
 
         Glide.with(movieImage).load("https://image.tmdb.org/t/p/w500"+favMovie.backdrop_path).into(movieImage)
@@ -264,6 +264,7 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
 
 
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getMovieCast(id:String) {
         detailViewModel.getMovieCast(id)
 
@@ -277,6 +278,7 @@ class DetailsFragment : Fragment() ,SimilarClickHandler{
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getSimilarMovies(id:String) {
 
         detailViewModel.getSimilarMovies(id)
