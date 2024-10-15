@@ -42,7 +42,8 @@ Before you begin, ensure you have met the following requirements:
 ---
 
 ### App Preview 📲  
-![App Preview Image](your-image-link-here)
+[![App Preview Image](your-image-link-here)](https://github.com/user-attachments/assets/a1f313cf-cc62-4e31-a9e2-34b2b5e82158
+)
 
 ---
 
