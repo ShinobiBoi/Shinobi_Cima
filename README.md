@@ -11,6 +11,7 @@ Features 🌟
  Real-Time Data: The app pulls real-time data from the TMDB API to ensure you always have the latest movie information.
  MVVM Architecture: Built using MVVM architecture for a scalable and maintainable codebase.
  
+ 
 Prerequisites 🎯
 Before you begin, ensure you have met the following requirements:
  Android device running at least Android 5.0 (Lollipop) or higher.
