@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:title="Popular Movies"
+        android:icon="@drawable/baseline_chair_24"
+        android:id="@id/popularMoviesFragment" />
+
+    <item android:title="Top Rated Movies"
+        android:icon="@drawable/baseline_star_24"
+        android:id="@id/topRatedFragment"
+      />
+
+    <item android:title="Up Coming Movies"
+        android:id="@id/upComingFragment"
+        android:icon="@drawable/baseline_upcoming_24"/>
+</menu>
