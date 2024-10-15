@@ -67,6 +67,9 @@ dependencies {
     //read more
     implementation (libs.readmore.textview)
 
+    //lottie
+    implementation (libs.lottie)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

@@ -20,6 +20,7 @@ lifecycleViewmodelKtx = "2.8.4"
 googleService = "4.4.2"
 kotlinPlugin = "1.8.10"
 readmoreTextview = "1.0.0"
+lottieVersion = "6.4.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,6 +54,8 @@ glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 
 
 readmore-textview = { module = "kr.co.prnd:readmore-textview", version.ref = "readmoreTextview" }
+
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottieVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
