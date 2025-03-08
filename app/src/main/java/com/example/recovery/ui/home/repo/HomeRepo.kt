@@ -1,9 +1,10 @@
 package com.example.recovery.ui.home.repo
 
 import com.example.recovery.data.model.movie.MoviesList
-import com.example.recovery.data.remote.RemoteDataSrc
+import com.example.recovery.domain.data.remote.RemoteDataSrc
+import com.example.recovery.domain.repository.HomeRepoInterface
 
-class HomeRepo(private val remoteDataSrc: RemoteDataSrc) :HomeRepoInterface {
+class HomeRepo(private val remoteDataSrc: RemoteDataSrc) : HomeRepoInterface {
 
 
     override suspend fun getPopularMovies(page: Int): MoviesList {

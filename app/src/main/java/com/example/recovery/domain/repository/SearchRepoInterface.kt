@@ -1,4 +1,4 @@
-package com.example.recovery.ui.search.repo
+package com.example.recovery.domain.repository
 
 import com.example.recovery.data.model.movie.MoviesList
 

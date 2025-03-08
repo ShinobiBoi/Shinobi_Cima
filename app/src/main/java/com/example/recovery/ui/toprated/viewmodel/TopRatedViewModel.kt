@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recovery.data.model.movie.Movie
-import com.example.recovery.ui.toprated.repo.TopRatedRepoInterface
+import com.example.recovery.data.model.movie.toMovie
+import com.example.recovery.domain.repository.TopRatedRepoInterface
 import kotlinx.coroutines.launch
 
 class TopRatedViewModel(private val repo: TopRatedRepoInterface) :ViewModel(){
@@ -18,8 +19,9 @@ class TopRatedViewModel(private val repo: TopRatedRepoInterface) :ViewModel(){
 
     fun getTopRatedMovies(){
         viewModelScope.launch {
-            val movies = repo.getTopRatedMovies(currentPage.value!!)
-            _topRatedMovies.postValue(movies.results)
+            val moviesResponse = repo.getTopRatedMovies(currentPage.value!!)
+            val movies = moviesResponse.results.map { it.toMovie() }
+            _topRatedMovies.postValue(movies)
 
         }
     }

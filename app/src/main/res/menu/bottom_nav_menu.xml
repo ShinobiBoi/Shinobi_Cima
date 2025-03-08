@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item android:title="Favourite"
+    <item android:title="Watchlist"
 
         android:id="@id/favouriteFragment"
-        android:icon="@drawable/baseline_favorite_24"/>
+        android:icon="@drawable/baseline_local_movies_24"/>
 
     <item android:title="Home"
         android:id="@id/homeFragment"

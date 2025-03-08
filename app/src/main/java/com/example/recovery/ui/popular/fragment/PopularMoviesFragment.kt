@@ -15,26 +15,19 @@ import com.example.recovery.R
 import com.example.recovery.data.model.entity.FavMovie
 import com.example.recovery.data.model.movie.Movie
 import com.example.recovery.data.remote.ApiClient
+import com.example.recovery.databinding.FragmentPopularMoviesBinding
 import com.example.recovery.ui.popular.repo.PopularRepo
 import com.example.recovery.ui.popular.viewmodel.PopularViewModel
 import com.example.recovery.ui.popular.viewmodel.PopularViewModelFactory
-import com.example.recovery.utilites.ClickHandler
-import com.example.recovery.utilites.Connection
-import com.example.recovery.utilites.GridAdapter
+import com.example.recovery.ui.utilites.Connection
+import com.example.recovery.ui.utilites.GridAdapter
 
 
-class PopularMoviesFragment : Fragment() ,ClickHandler{
+class PopularMoviesFragment : Fragment(){
 
-    private lateinit var recyclerViewPopular: RecyclerView
     private lateinit var popularAdapter: GridAdapter
-    private var movies = ArrayList<Movie>()
-
     private lateinit var popularViewModel: PopularViewModel
 
-
-    private lateinit var noInternetText :TextView
-    private lateinit var nextButton: Button
-    private lateinit var previousButton: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,88 +42,64 @@ class PopularMoviesFragment : Fragment() ,ClickHandler{
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_popular_movies, container, false)
-
-
-        //initialize views
-        initialize(view)
+        val binding = FragmentPopularMoviesBinding.inflate(inflater, container, false)
 
 
         // first case:  there is internet
         if(Connection.isNetworkAvailable(requireContext())){
 
             //get movies
-            noInternetText.visibility=View.GONE
+            binding.noInternetTextPopular.visibility=View.GONE
             popularViewModel.getPopularMovies()
 
             popularViewModel.currentPage.observe(viewLifecycleOwner){
 
                 if (it==1){
-                    nextButton.visibility=View.VISIBLE
-                    previousButton.visibility=View.GONE
+                    binding.nextButtonPopular.visibility=View.VISIBLE
+                    binding.previousButtonPopular.visibility=View.GONE
                 }
                 else if (it==20){
-                    nextButton.visibility=View.GONE
-                    previousButton.visibility=View.VISIBLE
+                    binding.nextButtonPopular.visibility=View.GONE
+                    binding.previousButtonPopular.visibility=View.VISIBLE
                 }
                 else{
-                    nextButton.visibility=View.VISIBLE
-                    previousButton.visibility=View.VISIBLE
+                    binding.nextButtonPopular.visibility=View.VISIBLE
+                    binding.previousButtonPopular.visibility=View.VISIBLE
                 }
             }
         }
         // second case:  there is no internet
         else{
-            noInternetText.visibility=View.VISIBLE
+            binding.noInternetTextPopular.visibility=View.VISIBLE
             //hide the rest
-            nextButton.visibility=View.GONE
-            previousButton.visibility=View.GONE
+            binding.popularMoviesContent.visibility=View.GONE
         }
 
 
 
-
+        popularAdapter = GridAdapter{
+            onMovieClick(it)
+        }
         popularViewModel.popularMovies.observe(viewLifecycleOwner){
-
             if (it != null) {
-
-                movies.clear()
-                movies.addAll(it)
-
-
+                popularAdapter.submitList(it)
             }
-            popularAdapter.notifyDataSetChanged()
-
         }
-
-        popularAdapter = GridAdapter(movies,this)
-        recyclerViewPopular.layoutManager = GridLayoutManager(context,2)
-        recyclerViewPopular.adapter = popularAdapter
+        binding.mainPopularMovies.adapter = popularAdapter
 
 
-        nextButton.setOnClickListener(){
-
+        binding.nextButtonPopular.setOnClickListener(){
             popularViewModel.nextPage()
-
         }
-        previousButton.setOnClickListener(){
+        binding.previousButtonPopular.setOnClickListener(){
             popularViewModel.previousPage()
         }
 
 
-        return view
+        return binding.root
     }
 
-    private fun initialize(view: View) {
-
-        recyclerViewPopular=view.findViewById(R.id.main_popular_movies)
-        noInternetText = view.findViewById(R.id.no_internet_text_popular)
-        nextButton=view.findViewById(R.id.next_button_popular)
-        previousButton=view.findViewById(R.id.previous_button_popular)
-
-    }
-
-    override fun onMovieClick(movie:Movie) {
+    fun onMovieClick(movie:Movie) {
         val action=PopularMoviesFragmentDirections.actionPopularMoviesFragmentToDetailsFragment(
             FavMovie(movie.backdrop_path,movie.poster_path,movie.original_title,movie.original_language,movie.runtime
                 ,movie.vote_average,movie.overview,movie.release_date,movie.id)

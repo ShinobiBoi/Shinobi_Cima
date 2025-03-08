@@ -2,7 +2,7 @@ package com.example.recovery.ui.favourite.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.recovery.ui.favourite.repo.FavouriteRepoInterface
+import com.example.recovery.domain.repository.FavouriteRepoInterface
 
 class FavouriteViewModelFactory(private val repo: FavouriteRepoInterface) :ViewModelProvider.Factory {
 

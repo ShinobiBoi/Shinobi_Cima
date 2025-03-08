@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recovery.data.model.movie.Movie
-import com.example.recovery.ui.home.repo.HomeRepoInterface
+import com.example.recovery.data.model.movie.toMovie
+import com.example.recovery.domain.repository.HomeRepoInterface
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repo: HomeRepoInterface) :ViewModel() {
@@ -28,29 +29,33 @@ class HomeViewModel(private val repo: HomeRepoInterface) :ViewModel() {
 
      fun getPopularMovies(){
         viewModelScope.launch {
-            val movies = repo.getPopularMovies(1)
-            _popularMovies.postValue(movies.results)
+            val moviesResponse = repo.getPopularMovies(1)
+            val movies = moviesResponse.results.map { it.toMovie() }
+            _popularMovies.postValue(movies)
         }
     }
 
     fun getTopRatedMovies(){
         viewModelScope.launch {
-            val movies = repo.getTopRatedMovies(1)
-            _topRatedMovies.postValue(movies.results)
+            val moviesResponse = repo.getTopRatedMovies(1)
+            val movies = moviesResponse.results.map { it.toMovie() }
+            _topRatedMovies.postValue(movies)
         }
     }
 
     fun getUpcomingMovies(){
         viewModelScope.launch {
-            val movies = repo.getUpComingMovies(1)
-            _upcomingMovies.postValue(movies.results)
+            val moviesResponse = repo.getUpComingMovies(1)
+            val movies = moviesResponse.results.map { it.toMovie() }
+            _upcomingMovies.postValue(movies)
         }
     }
 
     fun getNowPlayingMovies(){
         viewModelScope.launch {
-            val movies = repo.getNowPlayingMovies(1)
-            _nowPlayingMovies.postValue(movies.results)
+            val moviesResponse = repo.getNowPlayingMovies(1)
+            val movies = moviesResponse.results.map { it.toMovie() }
+            _nowPlayingMovies.postValue(movies)
         }
     }
 

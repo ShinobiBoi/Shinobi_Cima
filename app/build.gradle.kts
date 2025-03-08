@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -17,8 +19,22 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        android.buildFeatures.buildConfig=true
+
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localProperties.load(localPropertiesFile.inputStream())
+        }
+
+        val apiKey = localProperties.getProperty("API_KEY") ?: throw GradleException("API key not found in local.properties")
+        val IMAGE_BASE_URL = localProperties.getProperty("IMAGE_BASE_URL") ?: throw GradleException("API key not found in local.properties")
+
+        defaultConfig {
+            buildConfigField("String", "API_KEY", "\"$apiKey\"")
+            buildConfigField("String", "IMAGE_BASE_URL", "\"$IMAGE_BASE_URL\"")
+        }
     }
 
     buildTypes {
@@ -30,6 +46,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

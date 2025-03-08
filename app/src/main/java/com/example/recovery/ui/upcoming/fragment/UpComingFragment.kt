@@ -15,26 +15,18 @@ import com.example.recovery.R
 import com.example.recovery.data.model.entity.FavMovie
 import com.example.recovery.data.model.movie.Movie
 import com.example.recovery.data.remote.ApiClient
+import com.example.recovery.databinding.FragmentUpComingBinding
 import com.example.recovery.ui.upcoming.repo.UpComingRepo
 import com.example.recovery.ui.upcoming.viewmodel.UpComingViewModel
 import com.example.recovery.ui.upcoming.viewmodel.UpComingViewModelFactory
-import com.example.recovery.utilites.ClickHandler
-import com.example.recovery.utilites.Connection
-import com.example.recovery.utilites.GridAdapter
+import com.example.recovery.ui.utilites.Connection
+import com.example.recovery.ui.utilites.GridAdapter
 
 
-class UpComingFragment : Fragment() ,ClickHandler{
+class UpComingFragment : Fragment(){
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: GridAdapter
-    private  var movies = ArrayList<Movie>()
-
     private lateinit var upComingViewModel: UpComingViewModel
-
-    private lateinit var noInternetText :TextView
-    private lateinit var nextButton: Button
-    private lateinit var previousButton: Button
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,34 +41,28 @@ class UpComingFragment : Fragment() ,ClickHandler{
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_up_coming, container, false)
-
-
-        //initialize views
-        initialize(view)
-
-
+        val binding = FragmentUpComingBinding.inflate(inflater, container, false)
 
         // first case:  there is internet
         if(Connection.isNetworkAvailable(requireContext())) {
 
             //get movies
             upComingViewModel.getUpComingMovies()
-            noInternetText.visibility = View.GONE
+            binding.noInternetTextUpcoming.visibility = View.GONE
 
             upComingViewModel.currentPage.observe(viewLifecycleOwner){
 
                 if (it==1){
-                    nextButton.visibility=View.VISIBLE
-                    previousButton.visibility=View.GONE
+                    binding.nextButtonComing.visibility=View.VISIBLE
+                    binding.previousButtonComing.visibility=View.GONE
                 }
                 else if (it==20){
-                    nextButton.visibility=View.GONE
-                    previousButton.visibility=View.VISIBLE
+                    binding.nextButtonComing.visibility=View.GONE
+                    binding.previousButtonComing.visibility=View.VISIBLE
                 }
                 else{
-                    nextButton.visibility=View.VISIBLE
-                    previousButton.visibility=View.VISIBLE
+                    binding.nextButtonComing.visibility=View.VISIBLE
+                    binding.previousButtonComing.visibility=View.VISIBLE
                 }
 
             }
@@ -84,52 +70,34 @@ class UpComingFragment : Fragment() ,ClickHandler{
         }
         // second case:  there is no internet
         else{
-
-            noInternetText.visibility = View.VISIBLE
+            binding.noInternetTextUpcoming.visibility = View.VISIBLE
             // hide the rest
-            nextButton.visibility=View.GONE
-            previousButton.visibility=View.GONE
+            binding.upComingMoviesContent.visibility=View.GONE
         }
-
-
-
 
         upComingViewModel.upComingMovies.observe(viewLifecycleOwner){
             if (it!= null){
-                movies.clear()
-                movies.addAll(it)
+                adapter.submitList(it)
             }
-            adapter.notifyDataSetChanged()
-
         }
-
-
-
-
-        nextButton.setOnClickListener(){
+        binding.nextButtonComing.setOnClickListener(){
             upComingViewModel.nextPage()
         }
-        previousButton.setOnClickListener(){
+        binding.previousButtonComing.setOnClickListener(){
             upComingViewModel.previousPage()
         }
 
-        return view
+        adapter= GridAdapter{
+            onMovieClick(it)
+        }
+        binding.mainUpcomingMovies.adapter=adapter
+
+        return binding.root
     }
 
-    private fun initialize(view: View) {
 
-        recyclerView=view.findViewById(R.id.main_upcoming_movies)
-        noInternetText = view.findViewById(R.id.no_internet_text_upcoming)
-        nextButton=view.findViewById(R.id.next_button_coming)
-        previousButton=view.findViewById(R.id.previous_button_coming)
 
-        adapter= GridAdapter(movies,this)
-        recyclerView.layoutManager=GridLayoutManager(context,2)
-        recyclerView.adapter=adapter
-
-    }
-
-    override fun onMovieClick(movie:Movie) {
+     fun onMovieClick(movie:Movie) {
         val action= UpComingFragmentDirections.actionUpComingFragmentToDetailsFragment(
             FavMovie(movie.backdrop_path,movie.poster_path,movie.original_title,movie.original_language,movie.runtime
                 ,movie.vote_average,movie.overview,movie.release_date,movie.id)

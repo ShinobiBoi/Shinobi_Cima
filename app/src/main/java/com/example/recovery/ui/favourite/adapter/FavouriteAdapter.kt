@@ -6,16 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.recovery.R
 import com.example.recovery.data.model.entity.FavMovie
 import com.example.recovery.data.model.movie.Movie
-import com.example.recovery.utilites.ClickHandler
 
 private const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
 
-class FavouriteAdapter(private val favMovies: ArrayList<FavMovie>,private val clickHandler: ClickHandler): RecyclerView.Adapter<FavouriteAdapter.FavouriteViewHolder>() {
+class FavouriteAdapter(private val onMovieClick:(Movie)->Unit): ListAdapter<FavMovie,FavouriteAdapter.FavouriteViewHolder>(FavMovieDiffCallback()) {
 
 
 
@@ -25,12 +26,10 @@ class FavouriteAdapter(private val favMovies: ArrayList<FavMovie>,private val cl
         return FavouriteViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-       return favMovies.size
-    }
+
 
     override fun onBindViewHolder(holder: FavouriteViewHolder, position: Int) {
-        val movie=favMovies[position]
+        val movie=getItem(position)
 
         Glide.with(holder.movieImg).load(IMAGE_BASE_URL +movie.poster_path).into(holder.movieImg)
 
@@ -39,7 +38,7 @@ class FavouriteAdapter(private val favMovies: ArrayList<FavMovie>,private val cl
 
 
         holder.movie.setOnClickListener(){
-            clickHandler.onMovieClick(
+            onMovieClick(
                     Movie(movie.backdrop_path,movie.id,movie.original_language,movie.original_title,movie.overview
                     ,movie.poster_path,movie.release_date,movie.vote_average,movie.runtime)
                     )
@@ -51,6 +50,17 @@ class FavouriteAdapter(private val favMovies: ArrayList<FavMovie>,private val cl
         val movieImg : ImageView = movie.findViewById(R.id.grid_movieImage)
         val movieName : TextView =movie.findViewById(R.id.grid_movie_name)
 
+    }
+
+}
+
+class FavMovieDiffCallback :DiffUtil.ItemCallback<FavMovie>(){
+    override fun areItemsTheSame(oldItem: FavMovie, newItem: FavMovie): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: FavMovie, newItem: FavMovie): Boolean {
+        return oldItem == newItem
     }
 
 }

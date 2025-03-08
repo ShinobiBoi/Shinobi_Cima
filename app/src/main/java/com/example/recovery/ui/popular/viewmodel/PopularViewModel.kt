@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recovery.data.model.movie.Movie
-import com.example.recovery.ui.popular.repo.PopularRepoInterface
+import com.example.recovery.data.model.movie.toMovie
+import com.example.recovery.domain.repository.PopularRepoInterface
 import kotlinx.coroutines.launch
 
 class PopularViewModel(private val repo: PopularRepoInterface) :ViewModel(){
@@ -18,8 +19,9 @@ class PopularViewModel(private val repo: PopularRepoInterface) :ViewModel(){
 
     fun getPopularMovies(){
         viewModelScope.launch {
-            val movies = repo.getPopularMovies(currentPage.value!!)
-            _popularMovies.postValue(movies.results)
+            val moviesResponse = repo.getPopularMovies(currentPage.value!!)
+            val movies = moviesResponse.results.map { it.toMovie() }
+            _popularMovies.postValue(movies)
 
         }
     }

@@ -2,7 +2,7 @@ package com.example.recovery.ui.detail.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.recovery.ui.detail.repo.DetailRepoInterface
+import com.example.recovery.domain.repository.DetailRepoInterface
 
 class DetailViewModelFactory(private val repo: DetailRepoInterface) :ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

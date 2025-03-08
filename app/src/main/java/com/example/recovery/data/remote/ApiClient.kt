@@ -2,7 +2,9 @@ package com.example.recovery.data.remote
 
 import com.example.recovery.data.model.cast.CrewList
 import com.example.recovery.data.model.detailmovie.DetailMovie
+import com.example.recovery.data.model.detailmovie.DetailMovieResponse
 import com.example.recovery.data.model.movie.MoviesList
+import com.example.recovery.domain.data.remote.RemoteDataSrc
 
 object ApiClient : RemoteDataSrc {
 
@@ -26,7 +28,7 @@ object ApiClient : RemoteDataSrc {
         return RetrofitHelper.retrofitServices.getSimilarMovies(id,page)
     }
 
-    override suspend fun getDetailMovie(id: String, page: Int) :DetailMovie {
+    override suspend fun getDetailMovie(id: String, page: Int) :DetailMovieResponse {
         return RetrofitHelper.retrofitServices.getDetailMovie(id,page)
     }
 

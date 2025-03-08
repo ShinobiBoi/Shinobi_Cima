@@ -1,7 +1,9 @@
 package com.example.recovery.data.remote
 
+import com.example.recovery.BuildConfig
 import com.example.recovery.data.model.cast.CrewList
 import com.example.recovery.data.model.detailmovie.DetailMovie
+import com.example.recovery.data.model.detailmovie.DetailMovieResponse
 import com.example.recovery.data.model.movie.MoviesList
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -46,7 +48,7 @@ interface ApiServices {
         @Path("movie_id") id:String,
         @Query("page") page:Int,
         @Query("api_key") key:String= api_key
-    ):DetailMovie
+    ):DetailMovieResponse
 
 
 
@@ -67,10 +69,8 @@ interface ApiServices {
 
 
     companion object{
-        const val api_key="0e00cb8df334c216bc341e703723c22a"
+        const val api_key=BuildConfig.API_KEY
 
     }
 
 }
-
-//https://api.themoviedb.org/3/movie/popular?page=2&api_key=0e00cb8df334c216bc341e703723c22a

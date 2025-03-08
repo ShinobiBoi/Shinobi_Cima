@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recovery.data.model.movie.Movie
-import com.example.recovery.ui.search.repo.SearchRepoInterface
+import com.example.recovery.data.model.movie.toMovie
+import com.example.recovery.domain.repository.SearchRepoInterface
 import kotlinx.coroutines.launch
 
 class SearchViewModel(private val repo: SearchRepoInterface) :ViewModel() {
@@ -15,15 +16,17 @@ class SearchViewModel(private val repo: SearchRepoInterface) :ViewModel() {
 
     fun getMovies(query: String){
         viewModelScope.launch {
-            val m = repo.searchMovie(query,1)
-            _movies.postValue(m.results)
+            val moviesResponse = repo.searchMovie(query,1)
+            val movies = moviesResponse.results.map { it.toMovie() }
+            _movies.postValue(movies)
         }
     }
 
     fun getPopularMovies(){
         viewModelScope.launch {
-            val movies = repo.getPopularMovies()
-            _movies.postValue(movies.results)
+            val moviesResponse = repo.getPopularMovies()
+            val movies = moviesResponse.results.map { it.toMovie() }
+            _movies.postValue(movies)
 
         }
     }

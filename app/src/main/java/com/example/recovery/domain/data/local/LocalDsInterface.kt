@@ -1,5 +1,6 @@
-package com.example.recovery.data.local
+package com.example.recovery.domain.data.local
 
+import androidx.lifecycle.LiveData
 import com.example.recovery.data.model.entity.FavMovie
 
 interface LocalDsInterface {
@@ -8,5 +9,5 @@ interface LocalDsInterface {
 
     suspend fun deleteFavMovie(favMovie: FavMovie)
 
-    suspend fun getMovies():List<FavMovie>
+     fun getMovies(): LiveData<List<FavMovie>>
 }

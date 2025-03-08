@@ -1,11 +1,10 @@
-package com.example.recovery.ui.detail.repo
+package com.example.recovery.domain.repository
 
+import androidx.lifecycle.LiveData
 import com.example.recovery.data.model.cast.CrewList
-import com.example.recovery.data.model.detailmovie.DetailMovie
+import com.example.recovery.data.model.detailmovie.DetailMovieResponse
 import com.example.recovery.data.model.entity.FavMovie
 import com.example.recovery.data.model.movie.MoviesList
-import com.example.recovery.data.remote.ApiServices.Companion.api_key
-
 
 
 interface DetailRepoInterface {
@@ -13,7 +12,7 @@ interface DetailRepoInterface {
 
     suspend fun getSimilarMovies(id:String,page:Int): MoviesList
 
-    suspend fun getDetailMovie(id:String, page:Int):DetailMovie
+    suspend fun getDetailMovie(id:String, page:Int):DetailMovieResponse
 
     suspend fun getMovieCast(id:String, page:Int): CrewList
 
@@ -23,5 +22,5 @@ interface DetailRepoInterface {
 
     suspend fun deleteFavMovie(favMovie: FavMovie)
 
-    suspend fun getFavMovies():List<FavMovie>
+    fun getFavMovies(): LiveData<List<FavMovie>>
 }

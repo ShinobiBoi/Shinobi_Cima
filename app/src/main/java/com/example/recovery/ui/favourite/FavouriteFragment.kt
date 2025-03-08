@@ -14,33 +14,23 @@ import com.example.recovery.R
 import com.example.recovery.data.local.LocalDs
 import com.example.recovery.data.model.entity.FavMovie
 import com.example.recovery.data.model.movie.Movie
+import com.example.recovery.databinding.FragmentFavouriteBinding
 import com.example.recovery.ui.favourite.adapter.FavouriteAdapter
 import com.example.recovery.ui.favourite.repo.FavouriteRepo
 import com.example.recovery.ui.favourite.viewmodel.FavouriteViewModel
 import com.example.recovery.ui.favourite.viewmodel.FavouriteViewModelFactory
 import com.example.recovery.ui.popular.viewmodel.PopularViewModel
-import com.example.recovery.utilites.ClickHandler
-import com.example.recovery.utilites.GridAdapter
 
 
-class FavouriteFragment : Fragment(),ClickHandler {
-
-    private lateinit var noInternetText:TextView
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: FavouriteAdapter
-    private var movies = ArrayList<FavMovie>()
+class FavouriteFragment : Fragment() {
 
     private lateinit var favouriteViewModel: FavouriteViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val factory = FavouriteViewModelFactory(FavouriteRepo(LocalDs(requireContext())))
         favouriteViewModel=ViewModelProvider(this,factory).get(FavouriteViewModel::class.java)
-
-
 
     }
 
@@ -49,49 +39,34 @@ class FavouriteFragment : Fragment(),ClickHandler {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        //get the fav movies
-        favouriteViewModel.getFavMovie()
-
         // Inflate the layout for this fragment
-        val view =inflater.inflate(R.layout.fragment_favourite, container, false)
+        val binding= FragmentFavouriteBinding.inflate(inflater,container,false)
 
-
-        //initialzie the views
-        recyclerView=view.findViewById(R.id.favourite_movies)
-        noInternetText = view.findViewById(R.id.empty_watchlist)
+       val adapter=FavouriteAdapter{
+            onMovieClick(it)
+        }
 
         favouriteViewModel.favMovies.observe(viewLifecycleOwner){
 
 
             // noInternetText visibility
             if(it.isEmpty())
-                noInternetText.visibility=View.VISIBLE
+                binding.emptyWatchlist.visibility=View.VISIBLE
             else
-                noInternetText.visibility= View.GONE
+                binding.emptyWatchlist.visibility= View.GONE
 
 
             // update the list for the adapter
             if (it != null){
-                movies.clear()
-                movies.addAll(it)
-
+                adapter.submitList(it)
             }
-
-
-            adapter.notifyDataSetChanged()
         }
 
-        adapter=FavouriteAdapter(movies,this)
-        recyclerView.layoutManager=GridLayoutManager(context,2)
-        recyclerView.adapter=adapter
-
-
-
-        return view
+        binding.favouriteMovies.adapter=adapter
+        return binding.root
     }
 
-    override fun onMovieClick(movie:Movie) {
+     fun onMovieClick(movie:Movie) {
         val action= FavouriteFragmentDirections.actionFavouriteFragmentToDetailsFragment(
             FavMovie(movie.backdrop_path,movie.poster_path,movie.original_title,movie.original_language,movie.runtime
             ,movie.vote_average,movie.overview,movie.release_date,movie.id)

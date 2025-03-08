@@ -17,30 +17,26 @@ import com.example.recovery.R
 import com.example.recovery.data.model.entity.FavMovie
 import com.example.recovery.data.model.movie.Movie
 import com.example.recovery.data.remote.ApiClient
+import com.example.recovery.databinding.FragmentSearchBinding
 import com.example.recovery.ui.search.repo.SearchRepo
 import com.example.recovery.ui.search.viewmodel.SearchViewModel
 import com.example.recovery.ui.search.viewmodel.SearchViewModelFactory
-import com.example.recovery.utilites.ClickHandler
-import com.example.recovery.utilites.Connection
-import com.example.recovery.utilites.GridAdapter
+import com.example.recovery.ui.utilites.Connection
+import com.example.recovery.ui.utilites.GridAdapter
 
 
-class SearchFragment : Fragment(),ClickHandler {
-
-    private lateinit var recyclerView :RecyclerView
-    private lateinit var searchView :SearchView
-    private lateinit var emptyText :TextView
-
+class SearchFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
     private lateinit var gridAdapter: GridAdapter
-    private var movies = ArrayList<Movie>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val searchViewModelFactory = SearchViewModelFactory(SearchRepo(ApiClient))
-        searchViewModel = ViewModelProvider(this, searchViewModelFactory).get(SearchViewModel::class.java)
+        searchViewModel =
+            ViewModelProvider(this, searchViewModelFactory).get(SearchViewModel::class.java)
 
     }
 
@@ -50,33 +46,25 @@ class SearchFragment : Fragment(),ClickHandler {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_search, container, false)
+        val binding = FragmentSearchBinding.inflate(inflater, container, false)
 
 
-
-        // initialize the views
-        initialize(view)
-
-
-
-        if(Connection.isNetworkAvailable(requireContext())) {
+        if (Connection.isNetworkAvailable(requireContext())) {
 
             // if there is network get popular movies to show
             searchViewModel.getPopularMovies()
-            searchView.visibility = View.VISIBLE
-            emptyText.text = "No results found."
-        }
-
-        else{
+            binding.searchView.visibility = View.VISIBLE
+            binding.emptyResult.text = "No results found."
+        } else {
             // set the text to no internet and hide the recycle view
-            searchView.visibility = View.GONE
-            emptyText.text = "No internet connection, please try again later."
-            emptyText.visibility = View.VISIBLE
+            binding.searchContent.visibility = View.GONE
+            binding.emptyResult.text = "No internet connection, please try again later."
+            binding.emptyResult.visibility = View.VISIBLE
         }
 
 
 
-        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (!newText.isNullOrEmpty())
                     searchViewModel.getMovies(newText)
@@ -86,10 +74,10 @@ class SearchFragment : Fragment(),ClickHandler {
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null){
+                if (query != null) {
                     searchViewModel.getMovies(query)
                 }
-                searchView.clearFocus()
+                binding.searchView.clearFocus()
                 return true
             }
 
@@ -98,42 +86,43 @@ class SearchFragment : Fragment(),ClickHandler {
 
 
 
-        searchViewModel.movies.observe(viewLifecycleOwner){
-            if (!it.isNullOrEmpty()){
-                movies.clear()
-                movies.addAll(it)
+        searchViewModel.movies.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                gridAdapter.submitList(it)
                 // remove empty results text
-                recyclerView.visibility = View.VISIBLE
-                emptyText.visibility = View.GONE
-            }
-            else{
-                movies.clear()
+                binding.searchRv.visibility = View.VISIBLE
+                binding.emptyResult.visibility = View.GONE
+            } else {
+                gridAdapter.submitList(emptyList())
                 // show empty results text
-                recyclerView.visibility = View.GONE
-                emptyText.visibility = View.VISIBLE
+                binding.searchRv.visibility = View.GONE
+                binding.emptyResult.visibility = View.VISIBLE
             }
-            gridAdapter.notifyDataSetChanged()
-
         }
 
-        return view
+        gridAdapter = GridAdapter() {
+            onMovieClick(it)
+        }
+        binding.searchRv.adapter = gridAdapter
+
+        return binding.root
     }
 
-    private fun initialize(view: View) {
-        recyclerView = view.findViewById(R.id.search_rv)
-        searchView = view.findViewById(R.id.searchView)
-        emptyText = view.findViewById(R.id.empty_result)
 
-        gridAdapter=GridAdapter(movies,this)
-        recyclerView.layoutManager = GridLayoutManager(context,2)
-        recyclerView.adapter = gridAdapter
-    }
-
-    override fun onMovieClick(movie:Movie) {
-       val action=SearchFragmentDirections.actionSearchFragmentToDetailsFragment(
-           FavMovie(movie.backdrop_path,movie.poster_path,movie.original_title,movie.original_language,movie.runtime
-               ,movie.vote_average,movie.overview,movie.release_date,movie.id)
-       )
+    fun onMovieClick(movie: Movie) {
+        val action = SearchFragmentDirections.actionSearchFragmentToDetailsFragment(
+            FavMovie(
+                movie.backdrop_path,
+                movie.poster_path,
+                movie.original_title,
+                movie.original_language,
+                movie.runtime,
+                movie.vote_average,
+                movie.overview,
+                movie.release_date,
+                movie.id
+            )
+        )
         findNavController().navigate(action)
     }
 

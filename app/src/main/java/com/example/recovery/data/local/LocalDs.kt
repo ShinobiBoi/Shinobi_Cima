@@ -1,10 +1,11 @@
 package com.example.recovery.data.local
 
 import android.content.Context
-import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.recovery.data.model.entity.FavMovie
+import com.example.recovery.domain.data.local.LocalDsInterface
 
-class LocalDs (context: Context):LocalDsInterface {
+class LocalDs (context: Context): LocalDsInterface {
 
     private var db:MovieDatabase
 
@@ -24,7 +25,7 @@ class LocalDs (context: Context):LocalDsInterface {
         movieDAO.deleteFavMeal(favMovie)
     }
 
-    override suspend fun getMovies(): List<FavMovie> {
+    override  fun getMovies(): LiveData<List<FavMovie>> {
         return movieDAO.getFavMovies()
     }
 }

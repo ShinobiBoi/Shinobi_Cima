@@ -43,6 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
+        tools:layout="@layout/fragment_details"
         android:name="com.example.recovery.ui.detail.DetailsFragment"
         android:label="DetailsFragment" >
         <argument
@@ -62,6 +63,7 @@
             app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_favourite"
         android:id="@+id/favouriteFragment"
         android:name="com.example.recovery.ui.favourite.FavouriteFragment"
         android:label="Watchlist" >

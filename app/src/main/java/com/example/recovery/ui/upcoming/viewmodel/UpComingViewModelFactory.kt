@@ -2,7 +2,7 @@ package com.example.recovery.ui.upcoming.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.recovery.ui.upcoming.repo.UpComingRepoInterface
+import com.example.recovery.domain.repository.UpComingRepoInterface
 
 class UpComingViewModelFactory(private val upComingRepoInterface: UpComingRepoInterface) :ViewModelProvider.Factory{
 

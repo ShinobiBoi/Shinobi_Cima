@@ -7,7 +7,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -17,19 +17,22 @@
             android:background="#5367ff"
             app:title="Shinobi Cima"
             app:titleTextColor="@color/white"
+            app:layout_scrollFlags="scroll|enterAlways"
             />
 
 
-        
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="56dp">
 
-        <include layout="@layout/body" />
 
-    </FrameLayout>
+
+        <include layout="@layout/body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="56dp"
+            />
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

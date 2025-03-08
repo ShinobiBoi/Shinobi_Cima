@@ -2,7 +2,7 @@ package com.example.recovery.ui.popular.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.recovery.ui.popular.repo.PopularRepoInterface
+import com.example.recovery.domain.repository.PopularRepoInterface
 
 class PopularViewModelFactory (private val repoInterface: PopularRepoInterface) :ViewModelProvider.Factory {
 

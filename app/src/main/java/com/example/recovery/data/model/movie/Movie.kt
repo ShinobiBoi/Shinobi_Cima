@@ -12,5 +12,5 @@ data class Movie(
     val poster_path: String,
     val release_date: String,
     val vote_average: Double,
-    val runtime: Int= 100
+    val runtime: Int
 )

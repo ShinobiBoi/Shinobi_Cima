@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recovery.data.model.movie.Movie
-import com.example.recovery.ui.upcoming.repo.UpComingRepoInterface
+import com.example.recovery.data.model.movie.toMovie
+import com.example.recovery.domain.repository.UpComingRepoInterface
 import kotlinx.coroutines.launch
 
 class UpComingViewModel(private val repo: UpComingRepoInterface) :ViewModel() {
@@ -18,8 +19,9 @@ class UpComingViewModel(private val repo: UpComingRepoInterface) :ViewModel() {
 
     fun getUpComingMovies(){
         viewModelScope.launch {
-            val movies=repo.getUpComingMovies(currentPage.value!!)
-            _upComingMovies.postValue(movies.results)
+            val moviesResponse=repo.getUpComingMovies(currentPage.value!!)
+            val movies = moviesResponse.results.map { it.toMovie() }
+            _upComingMovies.postValue(movies)
         }
     }
 

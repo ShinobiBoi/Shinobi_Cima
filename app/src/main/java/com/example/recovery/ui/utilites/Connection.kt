@@ -1,4 +1,4 @@
-package com.example.recovery.utilites
+package com.example.recovery.ui.utilites
 
 import android.content.Context
 import android.net.ConnectivityManager

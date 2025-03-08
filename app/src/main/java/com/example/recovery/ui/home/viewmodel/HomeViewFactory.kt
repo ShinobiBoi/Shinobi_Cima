@@ -1,9 +1,8 @@
 package com.example.recovery.ui.home.viewmodel
 
-import android.widget.ViewSwitcher.ViewFactory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.recovery.ui.home.repo.HomeRepoInterface
+import com.example.recovery.domain.repository.HomeRepoInterface
 
 class HomeViewFactory(private val homeRepoInterface: HomeRepoInterface) :ViewModelProvider.Factory {
 
