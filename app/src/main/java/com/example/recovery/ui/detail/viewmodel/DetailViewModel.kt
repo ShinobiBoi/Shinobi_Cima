@@ -12,9 +12,13 @@ import com.example.recovery.data.model.entity.FavMovie
 import com.example.recovery.data.model.movie.Movie
 import com.example.recovery.data.model.movie.toMovie
 import com.example.recovery.domain.repository.DetailRepoInterface
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailViewModel(private val repo: DetailRepoInterface) :ViewModel(){
+@HiltViewModel
+class DetailViewModel @Inject constructor(
+    private val repo: DetailRepoInterface) :ViewModel(){
 
     private val _similarMovies= MutableLiveData<List<Movie>>()
     val similarMovies: LiveData<List<Movie>> =_similarMovies

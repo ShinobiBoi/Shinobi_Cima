@@ -21,6 +21,7 @@ googleService = "4.4.2"
 kotlinPlugin = "1.8.10"
 readmoreTextview = "1.0.0"
 lottieVersion = "6.4.1"
+hiltVersion = "2.51.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -57,6 +58,11 @@ readmore-textview = { module = "kr.co.prnd:readmore-textview", version.ref = "re
 
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottieVersion" }
 
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltVersion" }
+hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltVersion" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.2.0" }
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -66,4 +72,4 @@ google = {id = "com.google.gms.google-services",version.ref = "googleService"}
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlinPlugin"  }
 
-
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }

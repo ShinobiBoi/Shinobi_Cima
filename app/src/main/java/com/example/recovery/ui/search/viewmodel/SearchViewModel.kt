@@ -7,9 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.recovery.data.model.movie.Movie
 import com.example.recovery.data.model.movie.toMovie
 import com.example.recovery.domain.repository.SearchRepoInterface
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchViewModel(private val repo: SearchRepoInterface) :ViewModel() {
+@HiltViewModel
+class SearchViewModel@Inject constructor(
+    private val repo: SearchRepoInterface) :ViewModel() {
 
     private val _movies= MutableLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>> =_movies

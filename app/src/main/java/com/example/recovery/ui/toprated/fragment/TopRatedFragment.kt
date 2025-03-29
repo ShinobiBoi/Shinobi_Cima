@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,24 +19,16 @@ import com.example.recovery.data.remote.ApiClient
 import com.example.recovery.databinding.FragmentTopRatedBinding
 import com.example.recovery.ui.toprated.repo.TopRatedRepo
 import com.example.recovery.ui.toprated.viewmodel.TopRatedViewModel
-import com.example.recovery.ui.toprated.viewmodel.TopRatedViewModelFactory
 import com.example.recovery.ui.utilites.Connection
 import com.example.recovery.ui.utilites.GridAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class TopRatedFragment : Fragment() {
 
-    private lateinit var topRatedAdapter: GridAdapter
-    private lateinit var topRatedViewModel: TopRatedViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val topRatedViewModel: TopRatedViewModel by viewModels()
 
-        val topRatedViewModelFactory = TopRatedViewModelFactory(TopRatedRepo(ApiClient))
-        topRatedViewModel =
-            ViewModelProvider(this, topRatedViewModelFactory).get(TopRatedViewModel::class.java)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +37,7 @@ class TopRatedFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentTopRatedBinding.inflate(inflater, container, false)
 
+        lateinit var topRatedAdapter: GridAdapter
 
         // first case:  there is internet
         if (Connection.isNetworkAvailable(requireContext())) {

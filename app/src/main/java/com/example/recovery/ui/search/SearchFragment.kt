@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,25 +21,17 @@ import com.example.recovery.data.remote.ApiClient
 import com.example.recovery.databinding.FragmentSearchBinding
 import com.example.recovery.ui.search.repo.SearchRepo
 import com.example.recovery.ui.search.viewmodel.SearchViewModel
-import com.example.recovery.ui.search.viewmodel.SearchViewModelFactory
 import com.example.recovery.ui.utilites.Connection
 import com.example.recovery.ui.utilites.GridAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
-    private lateinit var searchViewModel: SearchViewModel
+    private  val searchViewModel: SearchViewModel by viewModels()
     private lateinit var gridAdapter: GridAdapter
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val searchViewModelFactory = SearchViewModelFactory(SearchRepo(ApiClient))
-        searchViewModel =
-            ViewModelProvider(this, searchViewModelFactory).get(SearchViewModel::class.java)
-
-    }
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     override fun onCreateView(

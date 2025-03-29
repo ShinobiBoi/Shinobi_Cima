@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,25 +19,18 @@ import com.example.recovery.data.remote.ApiClient
 import com.example.recovery.databinding.FragmentPopularMoviesBinding
 import com.example.recovery.ui.popular.repo.PopularRepo
 import com.example.recovery.ui.popular.viewmodel.PopularViewModel
-import com.example.recovery.ui.popular.viewmodel.PopularViewModelFactory
 import com.example.recovery.ui.utilites.Connection
 import com.example.recovery.ui.utilites.GridAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class PopularMoviesFragment : Fragment(){
 
     private lateinit var popularAdapter: GridAdapter
-    private lateinit var popularViewModel: PopularViewModel
+    private  val popularViewModel: PopularViewModel by viewModels()
 
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val popularFactory =PopularViewModelFactory(PopularRepo(ApiClient))
-        popularViewModel=ViewModelProvider(this,popularFactory).get(PopularViewModel::class.java)
-
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

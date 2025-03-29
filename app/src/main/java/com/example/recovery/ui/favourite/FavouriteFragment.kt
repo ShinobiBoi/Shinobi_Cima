@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,21 +19,14 @@ import com.example.recovery.databinding.FragmentFavouriteBinding
 import com.example.recovery.ui.favourite.adapter.FavouriteAdapter
 import com.example.recovery.ui.favourite.repo.FavouriteRepo
 import com.example.recovery.ui.favourite.viewmodel.FavouriteViewModel
-import com.example.recovery.ui.favourite.viewmodel.FavouriteViewModelFactory
 import com.example.recovery.ui.popular.viewmodel.PopularViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class FavouriteFragment : Fragment() {
 
-    private lateinit var favouriteViewModel: FavouriteViewModel
+    private  val favouriteViewModel: FavouriteViewModel by viewModels()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val factory = FavouriteViewModelFactory(FavouriteRepo(LocalDs(requireContext())))
-        favouriteViewModel=ViewModelProvider(this,factory).get(FavouriteViewModel::class.java)
-
-    }
 
 
     override fun onCreateView(

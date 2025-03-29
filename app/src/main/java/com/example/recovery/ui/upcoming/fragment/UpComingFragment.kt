@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,23 +19,17 @@ import com.example.recovery.data.remote.ApiClient
 import com.example.recovery.databinding.FragmentUpComingBinding
 import com.example.recovery.ui.upcoming.repo.UpComingRepo
 import com.example.recovery.ui.upcoming.viewmodel.UpComingViewModel
-import com.example.recovery.ui.upcoming.viewmodel.UpComingViewModelFactory
 import com.example.recovery.ui.utilites.Connection
 import com.example.recovery.ui.utilites.GridAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class UpComingFragment : Fragment(){
 
     private lateinit var adapter: GridAdapter
-    private lateinit var upComingViewModel: UpComingViewModel
+    private  val upComingViewModel: UpComingViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        val upComingFactory = UpComingViewModelFactory(UpComingRepo(ApiClient))
-        upComingViewModel=ViewModelProvider(this,upComingFactory).get(UpComingViewModel::class.java)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

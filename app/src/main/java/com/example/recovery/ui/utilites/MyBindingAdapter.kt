@@ -37,8 +37,6 @@ fun TextView.releaseTitle(movie: Movie){
         })</font>"
     }
     this.text = Html.fromHtml(htmlText)
-
-
 }
 
 @SuppressLint("DefaultLocale")

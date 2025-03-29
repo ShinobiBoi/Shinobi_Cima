@@ -7,9 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.recovery.data.model.movie.Movie
 import com.example.recovery.data.model.movie.toMovie
 import com.example.recovery.domain.repository.HomeRepoInterface
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(private val repo: HomeRepoInterface) :ViewModel() {
+@HiltViewModel
+class HomeViewModel@Inject constructor(
+    private val repo: HomeRepoInterface) :ViewModel() {
 
     private val _popularMovies= MutableLiveData<List<Movie>>()
     val popularMovies:LiveData<List<Movie>> =_popularMovies

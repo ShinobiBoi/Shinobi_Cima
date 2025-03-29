@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -22,16 +23,16 @@ import com.example.recovery.data.remote.ApiClient
 import com.example.recovery.databinding.FragmentDetailsBinding
 import com.example.recovery.ui.detail.repo.DetailRepo
 import com.example.recovery.ui.detail.viewmodel.DetailViewModel
-import com.example.recovery.ui.detail.viewmodel.DetailViewModelFactory
 import com.example.recovery.ui.utilites.CastAdapter
 import com.example.recovery.ui.utilites.Connection
 import com.example.recovery.ui.utilites.SimilarAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DetailsFragment : Fragment(){
 
 
-   private lateinit var detailViewModel: DetailViewModel
+   private val detailViewModel : DetailViewModel by viewModels()
 
    private lateinit var currMovie:FavMovie
 
@@ -44,17 +45,6 @@ class DetailsFragment : Fragment(){
     private val args :DetailsFragmentArgs by navArgs()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-
-        val factory =DetailViewModelFactory(DetailRepo(ApiClient,LocalDs(requireContext())))
-        detailViewModel= ViewModelProvider(this,factory).get(DetailViewModel::class.java)
-
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

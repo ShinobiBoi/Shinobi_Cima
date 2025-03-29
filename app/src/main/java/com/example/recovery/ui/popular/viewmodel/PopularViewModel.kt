@@ -7,9 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.recovery.data.model.movie.Movie
 import com.example.recovery.data.model.movie.toMovie
 import com.example.recovery.domain.repository.PopularRepoInterface
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PopularViewModel(private val repo: PopularRepoInterface) :ViewModel(){
+@HiltViewModel
+class PopularViewModel @Inject constructor(
+    private val repo: PopularRepoInterface) :ViewModel(){
 
     private val _currentPage = MutableLiveData<Int>().apply { value = 1 } // Initialize with a default value
     val currentPage: LiveData<Int> = _currentPage

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.recovery.data.model.entity.FavMovie
@@ -14,13 +15,13 @@ import com.example.recovery.data.model.movie.Movie
 import com.example.recovery.data.remote.ApiClient
 import com.example.recovery.databinding.FragmentHomeBinding
 import com.example.recovery.ui.home.repo.HomeRepo
-import com.example.recovery.ui.home.viewmodel.HomeViewFactory
 import com.example.recovery.ui.home.viewmodel.HomeViewModel
 import com.example.recovery.ui.utilites.Connection
 import com.example.recovery.ui.utilites.MyAdapter
 import com.example.recovery.ui.utilites.NowPlayingAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
 
@@ -29,17 +30,12 @@ class HomeFragment : Fragment() {
     private lateinit var upComingAdapter: MyAdapter
     private lateinit var nowPlayingAdapter: NowPlayingAdapter
 
-    private lateinit var homeViewModel: HomeViewModel
+    private  val homeViewModel: HomeViewModel by viewModels()
 
     private var fetchData = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val homeViewModelFactory = HomeViewFactory(HomeRepo(ApiClient))
-        homeViewModel = ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)
-
-
         if (Connection.isNetworkAvailable(requireContext())) {
 
             homeViewModel.getPopularMovies()
