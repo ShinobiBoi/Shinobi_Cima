@@ -23,7 +23,9 @@
 Before you begin, ensure you have met the following requirements:
 - Android device running at least Android 5.0 (Lollipop) or higher.
 - An active internet connection for browsing and fetching movie data (unless accessing movies in the offline watchlist).
-- Access to Google Play Store for installing the app (optional for APK).
+- add the API keys to be able to build the app.  
+API_KEY=0e00cb8df334c216bc341e703723c22a  
+IMAGE_BASE_URL =https://image.tmdb.org/t/p/w500
 
 ---
 
