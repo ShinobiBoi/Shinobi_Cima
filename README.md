@@ -29,6 +29,9 @@ Before you begin, ensure you have met the following requirements:
 
 ### API 🔗  
 **ShinobiCima** uses the **TMDB API** (The Movie Database) for fetching real-time movie data. TMDB provides a rich database of movies, TV shows, and reviews, offering detailed information about films including cast, crew, ratings, and trailers. 
+add the API keys to be able to build the app 
+API_KEY=0e00cb8df334c216bc341e703723c22a
+IMAGE_BASE_URL =https://image.tmdb.org/t/p/w500
 
 ---
 
@@ -51,7 +54,7 @@ Before you begin, ensure you have met the following requirements:
 To run the app locally, follow the steps below:
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-github-link-here
+   git clone [https://github.com/your-github-link-here](https://github.com/ShinobiBoi/Shinobi_Cima)
    ```
 2. Open the project in Android Studio.
 3. Ensure you have internet access to fetch movie data via the API.
