@@ -23,7 +23,7 @@
 Before you begin, ensure you have met the following requirements:
 - Android device running at least Android 5.0 (Lollipop) or higher.
 - An active internet connection for browsing and fetching movie data (unless accessing movies in the offline watchlist).
-- add the API keys to be able to build the app.  
+- add the API keys to local.properties file to be able to build the app.    
 API_KEY=0e00cb8df334c216bc341e703723c22a  
 IMAGE_BASE_URL =https://image.tmdb.org/t/p/w500
 
@@ -31,7 +31,7 @@ IMAGE_BASE_URL =https://image.tmdb.org/t/p/w500
 
 ### API 🔗  
 **ShinobiCima** uses the **TMDB API** (The Movie Database) for fetching real-time movie data. TMDB provides a rich database of movies, TV shows, and reviews, offering detailed information about films including cast, crew, ratings, and trailers.  
-add the API keys to be able to build the app.  
+add the API keys to local.properties file to be able to build the app.  
 API_KEY=0e00cb8df334c216bc341e703723c22a  
 IMAGE_BASE_URL =https://image.tmdb.org/t/p/w500
 
