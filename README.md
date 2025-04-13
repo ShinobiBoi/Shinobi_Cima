@@ -29,8 +29,8 @@ Before you begin, ensure you have met the following requirements:
 
 ### API 🔗  
 **ShinobiCima** uses the **TMDB API** (The Movie Database) for fetching real-time movie data. TMDB provides a rich database of movies, TV shows, and reviews, offering detailed information about films including cast, crew, ratings, and trailers. 
-add the API keys to be able to build the app.
-API_KEY=0e00cb8df334c216bc341e703723c22a
+add the API keys to be able to build the app.  
+API_KEY=0e00cb8df334c216bc341e703723c22a  
 IMAGE_BASE_URL =https://image.tmdb.org/t/p/w500
 
 ---
